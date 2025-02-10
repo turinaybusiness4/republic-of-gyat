@@ -20,14 +20,14 @@ const gltfLoader = new GLTFLoader();
 
 let mixer = null;
 
-gltfLoader.load("/models/flag2.glb", (gltf) => {
+gltfLoader.load("/models/flag11.glb", (gltf) => {
   gltf.scene.scale.set(0.01, 0.01, 0.01);
 
   scene.add(gltf.scene);
 
   // Animation
   mixer = new THREE.AnimationMixer(gltf.scene);
-  mixer.timeScale = 0.5;
+  mixer.timeScale = 0.25;
   const action = mixer.clipAction(gltf.animations[0]);
   action.play();
 });
@@ -99,7 +99,7 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setClearColor(0x1c1c1c);
+renderer.setClearColor(0x232323);
 /**
  * Animate
  */
