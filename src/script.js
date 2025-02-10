@@ -4,6 +4,31 @@ import GUI from "lil-gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
+const listener = new THREE.AudioListener();
+
+// Create a Global Audio Object
+const sound = new THREE.Audio(listener);
+
+// Load the Audio File
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load("fart.mp3", (buffer) => {
+  sound.setBuffer(buffer);
+  sound.setLoop(false); // Set to true if you want the audio to loop
+  sound.setVolume(0.5); // Set the volume (0.0 to 1.0)
+});
+
+// Handle Screen Tap
+const handleTap = () => {
+  if (!sound.isPlaying) {
+    sound.play(); // Play the audio
+  } else {
+    sound.pause(); // Pause the audio
+  }
+};
+
+// Add Event Listeners for Click and Touch
+window.addEventListener("click", handleTap);
+window.addEventListener("touchstart", handleTap);
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
@@ -20,8 +45,8 @@ const gltfLoader = new GLTFLoader();
 
 let mixer = null;
 
-gltfLoader.load("/models/flag11.glb", (gltf) => {
-  gltf.scene.scale.set(0.01, 0.01, 0.01);
+gltfLoader.load("/models/flag.glb", (gltf) => {
+  gltf.scene.scale.set(1.5, 1.5, 1.5);
 
   scene.add(gltf.scene);
 
@@ -38,7 +63,7 @@ gltfLoader.load("/models/flag11.glb", (gltf) => {
 const ambientLight = new THREE.AmbientLight(0xffffff, 2.4);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3.8);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024);
 directionalLight.shadow.camera.far = 15;
@@ -46,7 +71,7 @@ directionalLight.shadow.camera.left = -7;
 directionalLight.shadow.camera.top = 7;
 directionalLight.shadow.camera.right = 7;
 directionalLight.shadow.camera.bottom = -7;
-directionalLight.position.set(-5, 5, 0);
+directionalLight.position.set(0, 5, 0);
 scene.add(directionalLight);
 
 /**
@@ -81,9 +106,9 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(1, 4.25, 2.5);
+camera.position.set(-0.5, 4.25, 2.5);
 scene.add(camera);
-
+camera.add(listener);
 // Controls
 // const controls = new OrbitControls(camera, canvas);
 // // controls.target.set(0, 0.75, 0);
