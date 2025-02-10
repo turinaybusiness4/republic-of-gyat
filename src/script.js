@@ -27,7 +27,7 @@ gltfLoader.load("/models/flag11.glb", (gltf) => {
 
   // Animation
   mixer = new THREE.AnimationMixer(gltf.scene);
-  mixer.timeScale = 0.25;
+  mixer.timeScale = 0.4;
   const action = mixer.clipAction(gltf.animations[0]);
   action.play();
 });
